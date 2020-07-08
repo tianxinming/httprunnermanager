@@ -1,0 +1,20 @@
+-   config:
+        name: 第三个用例
+        request:
+            base_url: https://api.apiopen.top
+-   test:
+        extract:
+        -   resultData: content.result
+        name: 第三个用例
+        request:
+            data:
+                number: '10001'
+            headers:
+                xlogPath: 'https://xlog.pagoda.com.cn/app/kibana#/discover?_g=(refreshInterval:(display:Off,pause:!f,value:0),time:(from:''2020-07-02T00:56:13Z'',mode:absolute,to:''2020-07-02T02:56:13Z''))&_a=(columns:!(_source),index:c45a0650-cb70-11e8-bc02-afb1529a08c5,interval:auto,query:(language:kuery,query:''x_params
+                    : f7cf6a5f64cde5344849f41e4247a086''),sort:!(timestamp,desc))'
+            method: POST
+            url: /EmailSearch?xlogSign=f7cf6a5f64cde5344849f41e4247a086
+        validate:
+        -   check: content.code
+            comparator: equals
+            expected: 500

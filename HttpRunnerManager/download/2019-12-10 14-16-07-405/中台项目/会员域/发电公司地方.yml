@@ -1,0 +1,20 @@
+-   config:
+        name: 发电公司地方
+        parameters:
+        -   a:
+            -   - 1
+            -   - 2
+            -   - 3
+            -   - 4
+            -   - 5
+        request:
+            base_url: ''
+-   test:
+        extract:
+        -   resultCode: content.resultCode
+        name: 发电公司地方
+        request:
+            data:
+                a: $a
+            method: POST
+            url: http://yapi.staging.pagoda.com.cn/mock/129/captcha/send

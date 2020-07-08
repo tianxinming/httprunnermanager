@@ -1,0 +1,17 @@
+-   config:
+        name: ces
+        request:
+            base_url: ''
+-   test:
+        name: ces
+        parameters:
+        -   a:
+            -   - 1
+            -   - 2
+        request:
+            headers:
+                Content-Type: application/json
+            json:
+                a: '111'
+            method: POST
+            url: http://www.baidu.com/member/identify/$a

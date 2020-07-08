@@ -1,0 +1,29 @@
+-   config:
+        name: 流程用例
+        parameters:
+        -   a:
+            -   - 1
+            -   - 2
+            -   - 3
+            -   - 4
+            -   - 5
+        request:
+            base_url: ''
+-   test:
+        extract:
+        -   resultCode: content.resultCode
+        name: 发电公司地方
+        request:
+            data:
+                a: $a
+            method: POST
+            url: http://yapi.staging.pagoda.com.cn/mock/129/captcha/send
+-   test:
+        name: 百度
+        request:
+            headers:
+                Content-Type: application/json
+            json:
+                a: a
+            method: GET
+            url: http://www.baidu.com

@@ -1,0 +1,9 @@
+-   config:
+        name: test
+        request:
+            base_url: ''
+-   test:
+        name: test
+        request:
+            method: GET
+            url: http://www.baidu.com

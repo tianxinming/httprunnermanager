@@ -1,0 +1,12 @@
+-   config:
+        name: 上传文件test
+        
+-   test:
+        name: files
+        request:
+            data:
+                projectName: ERP
+            files:
+                file: ['D:/123.jpg', '${get_file()}','image/jpeg']
+            method: POST
+            url: http://193.112.247.196/miResourceMgr/commonUpload

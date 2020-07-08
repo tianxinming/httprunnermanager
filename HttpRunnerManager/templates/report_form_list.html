@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}自动化覆盖率{% endblock %}
+{% load staticfiles %}
+{% load custom_tags %}
+{% block content %}
+
+    <div class="admin-biaogelist">
+        <div class="listbiaoti am-cf">
+            <ul class="am-icon-flag on"> 自动化用例列表</ul>
+            <dl class="am-icon-home" style="float: right;"> 当前位置： 图表 > <a href="#">自动化用例列表</a></dl>
+        </div>
+        <form class="am-form am-g" id='test_list' name="test_list">
+            <table width="100%" class="am-table am-table-bordered am-table-radius am-table-striped">
+                <thead>
+                <tr class="am-success">
+                    <th class="table-title">序号</th>
+                    <th class="table-type">项目名称</th>
+                    <th class="table-type">总用例数</th>
+                    <th class="table-type">自动化用例数</th>
+                    <th class="table-type">自动化覆盖率</th>
+                    <th class="table-type">执行成功率</th>
+                    <th class="table-type">待完善用例数</th>
+                    <th class="table-type">待完善用例占比</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for foo in data.data %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ foo.project }}</td>
+                        <td>{{ foo.all }}</td>
+                        <td>{{ foo.complete }}</td>
+                        <td>{{ foo.complete_per }}</td>
+                        <td>{{ foo.success_per }}</td>
+                        <td>{{ foo.not_complete }}</td>
+                        <td>{{ foo.not_complete_per }} </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <ul class="am-pagination am-fr">
+                {{ page_list }}
+            </ul>
+
+
+            <hr/>
+
+        </form>
+    </div>
+{% endblock %}

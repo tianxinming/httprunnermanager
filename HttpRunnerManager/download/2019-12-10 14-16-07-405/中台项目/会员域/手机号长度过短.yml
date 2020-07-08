@@ -1,0 +1,14 @@
+-   config:
+        name: 手机号长度过短
+        request:
+            base_url: ''
+-   test:
+        name: 手机号长度过短
+        request:
+            headers:
+                Content-Type: application/json
+            json:
+                receiveAddr: '18818451588'
+                receiveWay: sms
+            method: POST
+            url: http://yapi.ks1.pagoda.com.cn/mock/129/captcha/send

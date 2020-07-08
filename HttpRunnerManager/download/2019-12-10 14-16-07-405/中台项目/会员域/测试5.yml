@@ -1,0 +1,11 @@
+-   config:
+        name: 测试5
+        request:
+            base_url: ''
+-   test:
+        name: 测试5
+        request:
+            method: POST
+            params:
+                a: a
+            url: http:/www.baidu.com

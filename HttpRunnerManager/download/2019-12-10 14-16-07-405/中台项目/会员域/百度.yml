@@ -1,0 +1,13 @@
+-   config:
+        name: 百度
+        request:
+            base_url: ''
+-   test:
+        name: 百度
+        request:
+            headers:
+                Content-Type: application/json
+            json:
+                a: a
+            method: GET
+            url: http://www.baidu.com

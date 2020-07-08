@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}项目进度信息{% endblock %}
+{% load staticfiles %}
+{% block content %}
+    <div class="admin-biaogelist">
+        <div class="listbiaoti am-cf">
+            <ul class="am-icon-flag on"> 报表</ul>
+            <dl class="am-icon-home" style="float: right;"> 当前位置： 项目报表 > <a href="#">报表展示</a></dl>
+        </div>
+
+        <div class="am-btn-toolbars am-btn-toolbar am-kg am-cf">
+            <form class="form-inline">
+                <div class="form-group" style="padding-bottom: 5px;">
+                    <select name="project" class="am-input-zm am-input-xm"
+                            style="padding-right: 50px;padding-left: 50px;" id="select_value">
+                        <option value="{{ info.belong_project }}"
+                                selected>{{ info.belong_project }}</option>
+                        {% for foo in project %}
+                            {% ifnotequal info.belong_project foo.project_name %}
+                                <option value="{{ foo.project_name }}">{{ foo.project_name }}</option>
+                            {% endifnotequal %}
+
+                        {% endfor %}
+
+                    </select>
+                </div>
+                <button type="button" class="am-btn am-radius am-btn-xs am-btn-success" id="report_button">搜索</button>
+            </form>
+        </div>
+        {#        <div id="pic1" style="width: 800px;height:600px; visibility:hidden"></div>#}
+        <div class="row">
+            <div id="pic1" style="width: 650px;height:600px;" class="col-md-6 col-md-offset-1"></div>
+            <div id="pic2" style="width: 650px;height:600px;" class="col-md-6 col-md-offset-1"></div>
+        </div>
+        <div class="row">
+            <div id="pic3" style="width: 650px;height:600px;" class="col-md-6 col-md-offset-1"></div>
+            <div id="pic4" style="width: 650px;height:600px;" class="col-md-6 col-md-offset-1"></div>
+        </div>
+
+    </div>
+
+
+    <script type="text/javascript">
+
+
+        $("#report_button").click(function () {
+            var data = $('#select_value option:selected').val()
+            $.ajax({
+                url: "/api/case_count/",
+                data: {
+                    'project': data
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (data) {
+                    document.getElementById("pic2").style.visibility = "hidden";
+                    document.getElementById("pic3").style.visibility = "hidden";
+                    document.getElementById("pic4").style.visibility = "hidden";
+                    // 基于准备好的dom，初始化echarts实例
+                    var myChart = echarts.init(document.getElementById('pic1'));
+
+                    // 指定图表的配置项和数据
+                    var option = {
+                        title: {
+                            text: '项目测试用例完成比例图',
+                            subtext: data['data']['project'],
+                            left: 'center'
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: '{a} <br/>{b} : {c} ({d}%)'
+                        },
+                        legend: {
+                            orient: 'vertical',
+                            left: 'left',
+                            data: ['已完成测试用例', '待完善测试用例']
+                        },
+                        series: [
+                            {
+                                name: '用例',
+                                type: 'pie',
+                                radius: '55%',
+                                center: ['50%', '60%'],
+                                data: [
+                                    {value: data['data']['complete'], name: '已完成测试用例', itemStyle: {color: '#005eff'}},
+                                    {
+                                        value: data['data']['not_complete'],
+                                        name: '待完善测试用例',
+                                        itemStyle: {color: '#ff9194'}
+                                    },
+                                ],
+                                emphasis: {
+                                    itemStyle: {
+                                        shadowBlur: 10,
+                                        shadowOffsetX: 0,
+                                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                    }
+                                }
+                            }
+                        ]
+                    };
+
+
+                    // 使用刚指定的配置项和数据显示图表。
+                    myChart.setOption(option);
+
+                },
+            });
+        });
+
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "/api/top_case_count/",
+                type: 'GET',
+                success(data) {
+                    for (let i = 0; i < data['data'].length; i++) {
+                        var myChart = echarts.init(document.getElementById('pic' + (i + 1).toString()));
+
+                        // 指定图表的配置项和数据
+                        var option = {
+                            title: {
+                                text: data['data'][i]['project'],
+                                {#subtext:'',#}
+                                left: 'center'
+                            },
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: '{a} <br/>{b} : {c} ({d}%)'
+                            },
+                            legend: {
+                                orient: 'vertical',
+                                left: 'left',
+                                data: ['已完成测试用例', '待完善测试用例']
+                            },
+                            series: [
+                                {
+                                    name: '用例',
+                                    type: 'pie',
+                                    radius: '55%',
+                                    center: ['50%', '60%'],
+                                    data: [
+                                        {
+                                            value: data['data'][i]['complete'],
+                                            name: '已完成测试用例',
+                                            itemStyle: {color: '#90ee90'}
+                                        },
+                                        {
+                                            value: data['data'][i]['not_complete'],
+                                            name: '待完善测试用例',
+                                            itemStyle: {color: '#ff9194'}
+                                        },
+                                    ],
+                                    emphasis: {
+                                        itemStyle: {
+                                            shadowBlur: 10,
+                                            shadowOffsetX: 0,
+                                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                        }
+                                    }
+                                }
+                            ]
+                        };
+
+
+                        // 使用刚指定的配置项和数据显示图表。
+                        myChart.setOption(option);
+                    }
+
+                }
+            })
+
+        });
+
+
+    </script>
+
+{% endblock %}

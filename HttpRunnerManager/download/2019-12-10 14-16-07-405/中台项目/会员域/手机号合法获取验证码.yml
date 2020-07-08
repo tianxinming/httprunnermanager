@@ -1,0 +1,14 @@
+-   config:
+        name: 手机号合法获取验证码
+        request:
+            base_url: ''
+-   test:
+        name: 手机号合法获取验证码
+        request:
+            headers:
+                Content-Type: application/json
+            json:
+                receiveAddr: '188184515888'
+                receiveWay: sms
+            method: POST
+            url: http://yapi.ks1.pagoda.com.cn/mock/129/captcha/send
