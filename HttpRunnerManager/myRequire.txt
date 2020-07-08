@@ -44,7 +44,7 @@ more-itertools==8.4.0
 mysqlclient==1.4.6
 namedlist==1.7
 packaging==20.4
-paramiko==2.4.1
+paramiko==2.4.2
 pluggy==0.13.1
 py==1.9.0
 pyasn1==0.4.8
